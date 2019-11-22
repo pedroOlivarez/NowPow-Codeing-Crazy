@@ -72,5 +72,5 @@ const n = 4;
 const expectedOutput = [1, 4, 3, 2, 5];
 const myOutput = convertBackToArray(reverseBetween(head, m, n));
 
-console.log("expected ouput", expectedOutput);
-console.log("my output:    ", myOutput);
+console.log("expected ouput:", expectedOutput);
+console.log("my output:     ", myOutput);
