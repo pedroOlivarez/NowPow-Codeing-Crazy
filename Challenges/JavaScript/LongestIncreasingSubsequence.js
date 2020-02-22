@@ -6,8 +6,7 @@ function findLongestIncreasingSubsequence(nums) {
    if (!nums.length) return max;
    const ourMap = new Map();
    const formattedArray = nums.map((value, index) => {
-      const subSequence = nums.slice(index + 1);
-      const numGreaterAfter = subSequence.filter(ss => ss > value).length;
+      const numGreaterAfter = nums.filter((_value, _index) => _index > index && _value > value).length;
       return {
          index: index,
          value: value,
@@ -20,16 +19,16 @@ function findLongestIncreasingSubsequence(nums) {
       const appendableCandidates = formattedArray.filter(subValue => {
          return subValue.value > value.value && subValue.index > value.index;
       });
+      // This sorts the numbers that could potentially be appended first by how many numbers in the array occuring after that value
+      // are greater than that value and secondarily by how early that value appears in the array
+      appendableCandidates.sort((a, b) => {
+         if (a.numGreaterAfter > b.numGreaterAfter) return 1;
+         if (b.numGreaterAfter > a.numGreaterAfter) return -1;
+         if (a.index > b.index) return -1;
+         if (b.index > a.index) return 1;
+         return 0;
+      });
       while (appendableCandidates.length) {
-         // This sorts the numbers that could potentially be appended first by how many numbers in the array occuring after that value
-         // are greater than that value and secondarily by how early that value appears in the array
-         appendableCandidates.sort((a, b) => {
-            if (a.numGreaterAfter > b.numGreaterAfter) return 1;
-            if (b.numGreaterAfter > a.numGreaterAfter) return -1;
-            if (a.index > b.index) return -1;
-            if (b.index > a.index) return 1;
-            return 0;
-         });
          const bestCandidate = appendableCandidates.pop();
          if (bestCandidate.index > mapValue[mapValue.length - 1].index && bestCandidate.value > mapValue[mapValue.length - 1].value) {
             mapValue.push(bestCandidate);
