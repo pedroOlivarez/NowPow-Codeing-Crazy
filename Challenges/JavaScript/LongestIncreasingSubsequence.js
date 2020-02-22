@@ -16,7 +16,6 @@ function findLongestIncreasingSubsequence(nums) {
    });
 
    formattedArray.forEach(value => {
-      let max = 0;
       const mapValue = [value];
       const appendableCandidates = formattedArray.filter(subValue => {
          return subValue.value > value.value && subValue.index > value.index;
